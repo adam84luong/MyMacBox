@@ -12,20 +12,26 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     # Enable tmate debugging of manually-triggered workflows if the input option was provided
-    - name: Setup tmate session
+    - name: Preparing configs
       env:
-        TMAK: ${{ secrets.TMAK }}
         PUB_KEY_4_MMB: ${{ secrets.PUB_KEY_4_MMB }}
-      # if: ${{ failure() }}
-      if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
       run: |
         tmateConfigPath="$HOME/.tmate.conf"
         authorizedKeysPath="$HOME/.ssh/authorized_keys"
+        # copy over config file
+        cp ./.tmate.conf $tmateConfigPath
+        # generate authorized_keys file
+        echo "$PUB_KEY_4_MMB" >> $authorizedKeysPath
+    - name: Install tmate client
+      run: |
         # install tmate client
         brew install tmate && tmate -v || :
-        # config tmate
-        cp ./.tmate.conf $tmateConfigPath
-        echo "$PUB_KEY_4_MMB" >> $authorizedKeysPath
+    - name: Start tmate session
+      env:
+        TMAK: ${{ secrets.TMAK }}
+      # if: ${{ failure() }}
+      if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
+      run: |
         # start tmate
         tmate -F -k $TMAK show-messages
       #uses: mxschmitt/action-tmate@v3
