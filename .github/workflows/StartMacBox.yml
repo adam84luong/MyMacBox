@@ -15,7 +15,7 @@ jobs:
     - name: Setup tmate session
       # if: ${{ failure() }}
       if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
-      uses: mxschmitt/action-tmate@v3.6
+      uses: mxschmitt/action-tmate@v2
       with:
         sudo: false
         limit-access-to-actor: true
