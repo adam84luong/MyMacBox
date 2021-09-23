@@ -19,5 +19,5 @@ jobs:
       with:
         sudo: false
         limit-access-to-actor: true
-      timeout-minutes: 15
+      timeout-minutes: 60
       
