@@ -19,10 +19,12 @@ jobs:
       # if: ${{ failure() }}
       if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
       run: |
+        tmateConfigPath="$HOME/.tmate.conf"
+        authorizedKeysPath="$HOME/.ssh/authorized_keys"
+        # install tmate client
         brew install tmate && tmate -v || :
         # config tmate
-        # tmateConfigPath="$HOME/.tmate.conf"
-        authorizedKeysPath="$HOME/.ssh/authorized_keys"
+        cp ./.tmate.conf $tmateConfigPath
         echo "$PUB_KEY_4_MMB" >> $authorizedKeysPath
         # start tmate
         tmate -F -k $TMAK show-messages
