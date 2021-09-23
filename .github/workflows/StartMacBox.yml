@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       debug_enabled:
-        description: 'Run the build with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)'     
+        description: 'Run the work flow with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)'     
         required: false
-        default: 'false'
+        default: '0'
 jobs:
   Start:
     runs-on: macos-latest
