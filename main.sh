@@ -5,7 +5,7 @@ run() {
   local tmateCmdBase="tmate -S $sockPath"
   local namedSessionCmd="-k $TMAK"
   
-  local echo 'set +e' >/tmp/tmate.bashrc
+  echo 'set +e' >/tmp/tmate.bashrc
   local setDefaultCmd="set-option -g default-command \"bash --rcfile /tmp/tmate.bashrc\" \\;"
   
   # start tmate
