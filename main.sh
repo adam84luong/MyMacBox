@@ -76,6 +76,7 @@ run() {
     # if 'tmate ls' return like 'no server running on'
     if [ -n "$(grep -m1 "no server running on" <<< "$tmateLsResult")" ]; then
       # Set up your session
+      echo "Need to setup new session"
       createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
     else
       echo "sessionName => $sessionName"
