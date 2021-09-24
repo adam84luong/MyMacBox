@@ -59,6 +59,7 @@ jobs:
         tmate -V
         # run
         source ./main.sh
+        startMyBox
       #uses: mxschmitt/action-tmate@v3
       #with:
       #  sudo: false
