@@ -68,12 +68,13 @@ run() {
     # We can check $? for the exit status (zero for success, non-zero for failure)
     # bash -lc "$tmateCmdBase has-session -t $sessionName 2>/dev/null"
 
+    local tmateLsResult="$(bash -lc "$tmateCmdBase ls | head -n1")"
     # if 'tmate ls' return like 'no server running on'
-    if [ -n "$(grep -m1 "no server running on" <<< "$(tmate ls | head -n1)")" ]; then
+    if [ -n "$(grep -m1 "no server running on" <<< "$tmateLsResult")" ]; then
       # Set up your session
       createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
     else
-      ehco "sessionName => $sessionName"
+      echo "sessionName => $sessionName"
     fi
     
     sleep $interval
