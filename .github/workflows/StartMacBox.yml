@@ -56,7 +56,7 @@ jobs:
         sockPath="/tmp/tmate.sock"
         tmateCmdBase="tmate -S $sockPath"
         echo 'set +e' >/tmp/tmate.bashrc
-        setDefaultCommand="set-option -g default-command \"bash --rcfile /tmp/tmate.bashrc\" \;"
+        setDefaultCommand="set-option -g default-command \"bash --rcfile /tmp/tmate.bashrc\" \\;"
         namedSessionCommand="-k $TMAK"
         
         # start tmate
