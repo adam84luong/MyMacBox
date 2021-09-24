@@ -1,8 +1,5 @@
-# execute
-run
-
 # main script
-run() {
+startMyBox() {
   # preparing tmate command
   local sockPath="/tmp/tmate.sock"
   local tmateBashPath="/tmp/tmate.bashrc"
