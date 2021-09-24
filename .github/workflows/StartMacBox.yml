@@ -15,10 +15,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     # Enable tmate debugging of manually-triggered workflows if the input option was provided
-    - name: Preparing configs
+    - name: Preparing stuff
       env:
         PUB_KEY_4_MMB: ${{ secrets.PUB_KEY_4_MMB }}
       run: |
+        idrsaPath="$HOME/.ssh/id_rsa
         tmateConfigPath="$HOME/.tmate.conf"
         authorizedKeysPath="$HOME/.ssh/authorized_keys"
         # copy over config file
@@ -27,6 +28,10 @@ jobs:
         # generate authorized_keys file
         echo "$PUB_KEY_4_MMB" >> "$authorizedKeysPath"
         cat "$authorizedKeysPath"
+        # Generating SSH keys
+        echo "Generating SSH keys"
+        echo -e 'y\n'|ssh-keygen -q -t rsa -N "" -f "$idrsaPath"
+        echo "Generated SSH-Key successfully"
     - name: Install tmate client
       run: |
         # install tmate client
@@ -39,12 +44,28 @@ jobs:
       run: |
         # get installed version
         tmate -V
-        # start tmate
+        # preparing tmate command
         sockPath="/tmp/tmate.sock"
-        tmate -S "$sockPath" -k "$TMAK" -d -v || :
-        ls -la
-        # tmate -k $TMAK new-session -s $(whoami) -d
-        # tmate show-messages
+        tmateCmdBase="tmate -S $sockPath"
+        echo 'set +e' >/tmp/tmate.bashrc
+        setDefaultCommand="set-option -g default-command \"bash --rcfile /tmp/tmate.bashrc\" \;"
+        
+        # start tmate
+        echo "Creating new session"
+        
+        echo "${tmateCmdBase} ${setDefaultCommand} new-session -d"
+        bash -lc "${tmateCmdBase} ${setDefaultCommand} new-session -d"
+        
+        eho "${tmateCmdBase} wait tmate-ready"
+        bash -lc "${tmateCmdBase} wait tmate-ready"
+        
+        echo "Created new session successfully"
+
+        echo "Fetching connection strings"
+        tmateSSH = await bash -lc "${tmateCmdBase} display -p '#{tmate_ssh}'"
+        tmateWeb = await bash -lc "${tmateCmdBase} display -p '#{tmate_web}'"
+
+        echo "Entering main loop"
       #uses: mxschmitt/action-tmate@v3
       #with:
       #  sudo: false
