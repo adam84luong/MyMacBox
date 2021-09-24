@@ -19,7 +19,7 @@ createNewSession() {
   tmateWeb="$(bash -lc "${tmateCmdBase} display -p '#{tmate_web}'")"
   
   if [ -n "$tmateSSH" ]; then
-    sessionName="$(echo "$tmateSSH" | cut -d ' ' -f 4 | cut -d '@' -f 1)"
+    sessionName="$(echo "$tmateSSH" | cut -d ' ' -f 3 | cut -d '@' -f 1)"
   fi
   
   echo "Created new session successfully"
@@ -71,10 +71,10 @@ run() {
     # We can check $? for the exit status (zero for success, non-zero for failure)
     # bash -lc "$tmateCmdBase has-session -t $sessionName 2>/dev/null"
 
-    tmateLsResult="$(bash -lc "$tmateCmdBase ls | head -n1")"
+    tmateLsResult="$(bash -lc "$tmateCmdBase ls" | head -n1 | cut -d ' ' -f 1,2,3)"
     echo "tmateLsResult => $tmateLsResult"
     # if 'tmate ls' return like 'no server running on'
-    if [ -n "$(grep -m1 "no server running on" <<< "$tmateLsResult")" ]; then
+    if [ -z "$(grep -m1 "1 windows" <<< "$tmateLsResult")" ]; then
       # Set up your session
       echo "Need to setup new session"
       createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
