@@ -25,15 +25,12 @@ run() {
   while [ $tickCounter -lt $timeToAlive ]; do
     echo "Fetching connection strings"
     
-    tmateSSH="$(bash -lc "${tmateCmdBase} display -p '#{tmate_ssh}'")"
-    tmateWeb="$(bash -lc "${tmateCmdBase} display -p '#{tmate_web}'")"
-    
-    if [ "$tmateWeb" == "" ] && [ "$tmateSSH" == "" ]; then
-      createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
-    fi
-    
     echo "Web shell: ${tmateWeb}"
     echo "SSH: ${tmateSSH}"
+    
+    if [ "$tmateWeb" == "" -a "$tmateSSH" == "" ]; then
+      createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
+    fi
     
     sleep $interval
     
@@ -55,7 +52,12 @@ createNewSession() {
   bash -lc "${newSessionCmd}"
 
   echo "${waitTmateReadyCmd}"
-  bash -lc "${waitTmateReadyCmd}" && \
+  bash -lc "${waitTmateReadyCmd}"
+  
+  tmateSSH="$(bash -lc "${tmateCmdBase} display -p '#{tmate_ssh}'")"
+  tmateWeb="$(bash -lc "${tmateCmdBase} display -p '#{tmate_web}'")"
+  
+  bash -lc "${tmateCmdBase} ls"
   
   echo "Created new session successfully"
 }
