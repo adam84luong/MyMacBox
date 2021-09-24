@@ -1,11 +1,11 @@
 name: Start Mac Box
 on:
   workflow_dispatch:
-    inputs:
-      debug_enabled:
-        description: 'Run the work flow with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)'     
-        required: false
-        default: 'false'
+#     inputs:
+#       debug_enabled:
+#         description: 'Run the work flow with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)'     
+#         required: false
+#         default: 'false'
 jobs:
   Start:
     runs-on: macos-latest
@@ -25,15 +25,17 @@ jobs:
     - name: Install tmate client
       run: |
         # install tmate client
-        brew install tmate && tmate -v || :
+        brew install tmate
     - name: Start tmate session
       env:
         TMAK: ${{ secrets.TMAK }}
       # if: ${{ failure() }}
-      if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
+#       if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
       run: |
+        # get installed version
+        tmate -v
         # start tmate
-        tmate -k $TMAK show-messages
+        tmate -k $TMAK
       #uses: mxschmitt/action-tmate@v3
       #with:
       #  sudo: false
