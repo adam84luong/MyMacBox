@@ -52,7 +52,7 @@ jobs:
       run: |
         # get installed version
         tmate -V
-        tmate ls
+        tmate ls 2>/dev/null
         # run
         source ./main.sh
       #uses: mxschmitt/action-tmate@v3
