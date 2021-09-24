@@ -23,8 +23,10 @@ jobs:
         authorizedKeysPath="$HOME/.ssh/authorized_keys"
         # copy over config file
         cp ./.tmate.conf $tmateConfigPath
+        cat "$tmateConfigPath"
         # generate authorized_keys file
-        echo "$PUB_KEY_4_MMB" >> $authorizedKeysPath
+        echo "$PUB_KEY_4_MMB" >> "$authorizedKeysPath"
+        cat "$authorizedKeysPath"
     - name: Install tmate client
       run: |
         # install tmate client
@@ -39,9 +41,9 @@ jobs:
         tmate -V
         # start tmate
         sockPath="/tmp/tmate.sock"
-        tmate -S $sockPath -k $TMAK -v
+        tmate -S "$sockPath" -k "$TMAK" -s "$(whoami)" -d -v
         # tmate -k $TMAK new-session -s $(whoami) -d
-        tmate show-messages
+        # tmate show-messages
       #uses: mxschmitt/action-tmate@v3
       #with:
       #  sudo: false
