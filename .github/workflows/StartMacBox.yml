@@ -54,7 +54,6 @@ jobs:
         tmate -V
         # run
         source ./main.sh
-        run
       #uses: mxschmitt/action-tmate@v3
       #with:
       #  sudo: false
