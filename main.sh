@@ -1,12 +1,13 @@
 run() {
   # preparing tmate command
   local sockPath="/tmp/tmate.sock"
+  local tmateBashPath="/tmp/tmate.bashrc"
+
+  echo 'set +e' >"$tmateBashPath"
+  local setDefaultCmd="set-option -g default-command \"bash --rcfile $tmateBashPath\" \\;"
   
   local tmateCmdBase="tmate -S $sockPath"
   local namedSessionCmd="-k $TMAK"
-  
-  echo 'set +e' >/tmp/tmate.bashrc
-  local setDefaultCmd="set-option -g default-command \"bash --rcfile /tmp/tmate.bashrc\" \\;"
   
   # start tmate
   tmateWeb=""
@@ -39,9 +40,9 @@ run() {
 }
 
 createNewSession() {
-  local tmateCmdBase=$1
-  local namedSessionCmd=$2
-  local setDefaultCmd=$3
+  local tmateCmdBase="$1"
+  local namedSessionCmd="$2"
+  local setDefaultCmd="$3"
   
   local newSessionCmd="${tmateCmdBase} ${namedSessionCmd} ${setDefaultCmd} new-session -d"
   local waitTmateReadyCmd="${tmateCmdBase} wait tmate-ready"
@@ -52,7 +53,7 @@ createNewSession() {
   bash -lc "${newSessionCmd}"
 
   echo "${waitTmateReadyCmd}"
-  bash -lc "${waitTmateReadyCmd}"
+  bash -lc "${waitTmateReadyCmd}" &
 
   echo "Created new session successfully"
 }
