@@ -47,10 +47,13 @@ run() {
   
   # convert to seconds
   timeToAlive=$((TIME_TO_ALIVE*60))
-  interval=300
+  # seconds
+  interval=60
   tickCounter=0
   
-  echo "$timeToAlive"
+  echo "timeToAlive in seconds => $timeToAlive"
+
+  local tmateLsResult=""
   
   echo "Entering main loop"
   while [ $tickCounter -lt $timeToAlive ]; do
@@ -68,7 +71,8 @@ run() {
     # We can check $? for the exit status (zero for success, non-zero for failure)
     # bash -lc "$tmateCmdBase has-session -t $sessionName 2>/dev/null"
 
-    local tmateLsResult="$(bash -lc "$tmateCmdBase ls | head -n1")"
+    tmateLsResult="$(bash -lc "$tmateCmdBase ls | head -n1")"
+    echo "tmateLsResult => $tmateLsResult"
     # if 'tmate ls' return like 'no server running on'
     if [ -n "$(grep -m1 "no server running on" <<< "$tmateLsResult")" ]; then
       # Set up your session
