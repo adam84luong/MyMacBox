@@ -1,3 +1,29 @@
+# utility function
+createNewSession() {
+  local tmateCmdBase="$1"
+  local namedSessionCmd="$2"
+  local setDefaultCmd="$3"
+  
+  local newSessionCmd="${tmateCmdBase} ${namedSessionCmd} ${setDefaultCmd} new-session -d"
+  local waitTmateReadyCmd="${tmateCmdBase} wait tmate-ready"
+  
+  echo "Creating new session"
+  
+  echo "${newSessionCmd}"
+  bash -lc "${newSessionCmd}"
+
+  echo "${waitTmateReadyCmd}"
+  bash -lc "${waitTmateReadyCmd}"
+  
+  tmateSSH="$(bash -lc "${tmateCmdBase} display -p '#{tmate_ssh}'")"
+  tmateWeb="$(bash -lc "${tmateCmdBase} display -p '#{tmate_web}'")"
+  
+  echo "Created new session successfully"
+  
+  bash -lc "${tmateCmdBase} ls"
+}
+
+# main script
 run() {
   # preparing tmate command
   local sockPath="/tmp/tmate.sock"
@@ -29,7 +55,8 @@ run() {
     echo "SSH: ${tmateSSH}"
     
     if [ "$tmateWeb" == "" -a "$tmateSSH" == "" ]; then
-      createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
+      # createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
+      echo 
     fi
     
     sleep $interval
@@ -38,26 +65,5 @@ run() {
   done
 }
 
-createNewSession() {
-  local tmateCmdBase="$1"
-  local namedSessionCmd="$2"
-  local setDefaultCmd="$3"
-  
-  local newSessionCmd="${tmateCmdBase} ${namedSessionCmd} ${setDefaultCmd} new-session -d"
-  local waitTmateReadyCmd="${tmateCmdBase} wait tmate-ready"
-  
-  echo "Creating new session"
-  
-  echo "${newSessionCmd}"
-  bash -lc "${newSessionCmd}"
-
-  echo "${waitTmateReadyCmd}"
-  bash -lc "${waitTmateReadyCmd}"
-  
-  tmateSSH="$(bash -lc "${tmateCmdBase} display -p '#{tmate_ssh}'")"
-  tmateWeb="$(bash -lc "${tmateCmdBase} display -p '#{tmate_web}'")"
-  
-  bash -lc "${tmateCmdBase} ls"
-  
-  echo "Created new session successfully"
-}
+# execute
+run
