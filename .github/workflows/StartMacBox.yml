@@ -52,7 +52,6 @@ jobs:
       run: |
         # get installed version
         tmate -V
-        tmate -S /tmp/tmate.sock ls 2>/dev/null || :
         # run
         source ./main.sh
       #uses: mxschmitt/action-tmate@v3
