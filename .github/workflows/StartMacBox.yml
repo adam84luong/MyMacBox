@@ -1,11 +1,15 @@
 name: Start Mac Box
 on:
   workflow_dispatch:
-#     inputs:
+    inputs:
 #       debug_enabled:
 #         description: 'Run the work flow with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)'     
 #         required: false
 #         default: 'false'
+      timeout:
+        description: 'How much time the box alive (in minutes)'     
+        required: false
+        default: '60'
 defaults:
   run:
     shell: bash
@@ -41,6 +45,7 @@ jobs:
     - name: Start tmate session
       env:
         TMAK: ${{ secrets.TMAK }}
+        TIME_TO_ALIVE: ${{ github.event.inputs.timeout }}
       # if: ${{ failure() }}
 #       if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
       run: |
@@ -64,10 +69,22 @@ jobs:
         echo "Created new session successfully"
 
         echo "Fetching connection strings"
-        tmateSSH = await bash -lc "${tmateCmdBase} display -p '#{tmate_ssh}'"
-        tmateWeb = await bash -lc "${tmateCmdBase} display -p '#{tmate_web}'"
+        tmateSSH="$(bash -lc "${tmateCmdBase} display -p '#{tmate_ssh}'")"
+        tmateWeb="$(bash -lc "${tmateCmdBase} display -p '#{tmate_web}'")"
 
         echo "Entering main loop"
+        # convert to seconds
+        timeToAlive=$((TIME_TO_ALIVE*60))
+        interval=5000
+        tickCounter=0
+        while [[ $tickCounter -le $timeToAlive ]]; do
+          if [[ tmateWeb ]]; then
+            echo "Web shell: ${tmateWeb}"
+          fi
+          echo "SSH: ${tmateSSH}"
+          sleep $interval
+          echo "tickCounter => $((tickCounter+=interval))"
+        done
       #uses: mxschmitt/action-tmate@v3
       #with:
       #  sudo: false
