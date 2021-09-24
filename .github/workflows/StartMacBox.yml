@@ -38,7 +38,8 @@ jobs:
         # get installed version
         tmate -V
         # start tmate
-        tmate -k $TMAK
+        tmate -k $TMAK new-session -s $(whoami) -d
+        tmate show-messages
       #uses: mxschmitt/action-tmate@v3
       #with:
       #  sudo: false
