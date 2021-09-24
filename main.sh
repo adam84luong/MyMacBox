@@ -1,31 +1,5 @@
-# utility function
-createNewSession() {
-  local tmateCmdBase="$1"
-  local namedSessionCmd="$2"
-  local setDefaultCmd="$3"
-  
-  local newSessionCmd="${tmateCmdBase} ${namedSessionCmd} ${setDefaultCmd} new-session -d"
-  local waitTmateReadyCmd="${tmateCmdBase} wait tmate-ready"
-  
-  echo "Creating new session"
-  
-  echo "${newSessionCmd}"
-  bash -lc "${newSessionCmd}"
-
-  echo "${waitTmateReadyCmd}"
-  bash -lc "${waitTmateReadyCmd}"
-  
-  tmateSSH="$(bash -lc "${tmateCmdBase} display -p '#{tmate_ssh}'")"
-  tmateWeb="$(bash -lc "${tmateCmdBase} display -p '#{tmate_web}'")"
-  
-  if [ -n "$tmateSSH" ]; then
-    sessionName="$(echo "$tmateSSH" | cut -d ' ' -f 3 | cut -d '@' -f 1)"
-  fi
-  
-  echo "Created new session successfully"
-  
-  #bash -lc "${tmateCmdBase} ls"
-}
+# execute
+run
 
 # main script
 run() {
@@ -57,9 +31,6 @@ run() {
   
   echo "Entering main loop"
   while [ $tickCounter -lt $timeToAlive ]; do
-    
-    echo "SSH: ${tmateSSH} | Web shell: ${tmateWeb}"
-    
     # Check if the session exists, discarding output
     # We can check $? for the exit status (zero for success, non-zero for failure)
     # bash -lc "$tmateCmdBase has-session -t $sessionName 2>/dev/null"
@@ -69,20 +40,45 @@ run() {
     # if 'tmate ls' not return like '...: 1 windows', then need to revew tmate session
     if [ -z "$(grep -m1 "1 windows" <<< "$tmateLsResult")" ]; then
       # Set up your session
-      echo "Need to setup new session"
+      echo "Need to re-new tmate session"
       createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
-      echo "SSH: ${tmateSSH} | Web shell: ${tmateWeb}"
-    # else
-    #  echo "sessionName => $sessionName"
     fi
-    
+    # ouput the connection strings to ssh to Mac box
+    echo "SSH: ${tmateSSH} | Web shell: ${tmateWeb}"
+    # sleep N seconds
     sleep $interval
-    
+    # output timelapsed
     echo "Timelapsed => $((tickCounter+=interval)) seconds"
   done
-  
+  # return success
   return 0
 }
 
-# execute
-run
+# utility function
+createNewSession() {
+  local tmateCmdBase="$1"
+  local namedSessionCmd="$2"
+  local setDefaultCmd="$3"
+  
+  local newSessionCmd="${tmateCmdBase} ${namedSessionCmd} ${setDefaultCmd} new-session -d"
+  local waitTmateReadyCmd="${tmateCmdBase} wait tmate-ready"
+  
+  echo "Creating new session"
+  
+  echo "${newSessionCmd}"
+  bash -lc "${newSessionCmd}"
+
+  echo "${waitTmateReadyCmd}"
+  bash -lc "${waitTmateReadyCmd}"
+  # set value to 2 global variables
+  tmateSSH="$(bash -lc "${tmateCmdBase} display -p '#{tmate_ssh}'")"
+  tmateWeb="$(bash -lc "${tmateCmdBase} display -p '#{tmate_web}'")"
+  
+  # if [ -n "$tmateSSH" ]; then
+  #   sessionName="$(echo "$tmateSSH" | cut -d ' ' -f 3 | cut -d '@' -f 1)"
+  # fi
+  
+  echo "Created new session successfully"
+  # return success
+  return 0
+}
