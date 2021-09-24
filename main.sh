@@ -18,7 +18,7 @@ createNewSession() {
   tmateSSH="$(bash -lc "${tmateCmdBase} display -p '#{tmate_ssh}'")"
   tmateWeb="$(bash -lc "${tmateCmdBase} display -p '#{tmate_web}'")"
   
-  if [ -n tmateSSH ]; then
+  if [ -n "$tmateSSH" ]; then
     sessionName="$(echo "$tmateSSH" | cut -d ' ' -f 4 | cut -d '@' -f 1)"
   fi
   
@@ -37,7 +37,7 @@ run() {
   local setDefaultCmd="set-option -g default-command \"bash --rcfile $tmateBashPath\" \\;"
   
   local tmateCmdBase="tmate -S $sockPath"
-  local namedSessionCmd="-k $TMAK"
+  local namedSessionCmd="-k $TMAK -n mytmate"
   
   # start tmate
   tmateWeb=""
@@ -66,13 +66,12 @@ run() {
     
     # Check if the session exists, discarding output
     # We can check $? for the exit status (zero for success, non-zero for failure)
-    bash -lc "$tmateCmdBase has-session -t $sessionName 2>/dev/null"
+    # bash -lc "$tmateCmdBase has-session -t $sessionName 2>/dev/null"
 
-    if [ $? != 0 ]; then
+    # if 'tmate ls' return like 'no server running on'
+    if [ -n "$(grep -m1 "no server running on" <<< "$(tmate ls | head -n1)")" ]; then
       # Set up your session
       createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
-      # Attach to created session
-      #bash -lc "$tmateCmdBase attach-session -t $sessionName"
     else
       ehco "sessionName => $sessionName"
     fi
