@@ -70,7 +70,7 @@ run() {
     # We can check $? for the exit status (zero for success, non-zero for failure)
     # bash -lc "$tmateCmdBase has-session -t $sessionName 2>/dev/null"
 
-    tmateLsResult"$(bash -lc "$tmateCmdBase ls 2>/dev/null)"
+    tmateLsResult"$(bash -lc "$tmateCmdBase ls 2>/dev/null")"
     tmateLsResult="$(echo $tmateLsResult | head -n1 | cut -d ' ' -f 1,2,3)"
     echo "tmateLsResult => $tmateLsResult"
     # if 'tmate ls' return like 'no server running on'
