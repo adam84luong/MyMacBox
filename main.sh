@@ -57,10 +57,9 @@ run() {
   
   echo "Entering main loop"
   while [ $tickCounter -lt $timeToAlive ]; do
-    echo "Fetching connection strings"
     
-    echo "Web shell: ${tmateWeb}"
-    echo "SSH: ${tmateSSH}"
+    echo "Fetching connection strings"
+    echo "SSH: ${tmateSSH} | Web shell: ${tmateWeb}"
     
 #     if [ "$tmateWeb" == "" -a "$tmateSSH" == "" ]; then
 #       # createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
