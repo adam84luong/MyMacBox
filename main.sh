@@ -60,18 +60,14 @@ run() {
     
     echo "SSH: ${tmateSSH} | Web shell: ${tmateWeb}"
     
-#     if [ "$tmateWeb" == "" -a "$tmateSSH" == "" ]; then
-#       # createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
-#       echo 
-#     fi
-    
     # Check if the session exists, discarding output
     # We can check $? for the exit status (zero for success, non-zero for failure)
     # bash -lc "$tmateCmdBase has-session -t $sessionName 2>/dev/null"
-
-    bash -lc "$tmateCmdBase has-session 2>/dev/null"
-    # if 'has-session' cmd return 1, then need to create new session
-    if [ $? -eq 1 ]; then
+    tmateLsResult="$(bash -lc "$tmateCmdBase ls 2>/dev/null || :")"
+    tmateLsResult="$(echo $tmateLsResult | head -n1 | cut -d ' ' -f 1,2,3)"
+    # echo "tmateLsResult => $tmateLsResult"
+    # if 'tmate ls' not return like '...: 1 windows', then need to revew tmate session
+    if [ -z "$(grep -m1 "1 windows" <<< "$tmateLsResult")" ]; then
       # Set up your session
       echo "Need to setup new session"
       createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
