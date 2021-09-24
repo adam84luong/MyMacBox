@@ -38,7 +38,7 @@ jobs:
         # get installed version
         tmate -V
         # start tmate
-        tmate -S /tmp/tmate.sock new-session -d -k $TMAK
+        tmate -S /tmp/tmate.sock -d -k $TMAK
         # tmate -k $TMAK new-session -s $(whoami) -d
         tmate show-messages
       #uses: mxschmitt/action-tmate@v3
