@@ -19,9 +19,10 @@ jobs:
       env:
         PUB_KEY_4_MMB: ${{ secrets.PUB_KEY_4_MMB }}
       run: |
-        idrsaPath="$HOME/.ssh/id_rsa"
+        sshBasePath="$HOME/.ssh"
+        idrsaPath="$sshBasePath/id_rsa"
         tmateConfigPath="$HOME/.tmate.conf"
-        authorizedKeysPath="$HOME/.ssh/authorized_keys"
+        authorizedKeysPath="$sshBasePath/authorized_keys"
         # copy over config file
         cp ./.tmate.conf $tmateConfigPath
         cat "$tmateConfigPath"
@@ -31,6 +32,7 @@ jobs:
         # Generating SSH keys
         echo "Generating SSH keys"
         echo -e 'y\n'|ssh-keygen -q -t rsa -N "" -f "$idrsaPath"
+        ls -l "$sshBasePath"
         echo "Generated SSH-Key successfully"
     - name: Install tmate client
       run: |
@@ -56,7 +58,7 @@ jobs:
         echo "${tmateCmdBase} ${setDefaultCommand} new-session -d"
         bash -lc "${tmateCmdBase} ${setDefaultCommand} new-session -d"
         
-        eho "${tmateCmdBase} wait tmate-ready"
+        echo "${tmateCmdBase} wait tmate-ready"
         bash -lc "${tmateCmdBase} wait tmate-ready"
         
         echo "Created new session successfully"
