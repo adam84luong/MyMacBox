@@ -26,7 +26,7 @@ run() {
     tmateSSH="$(bash -lc "${tmateCmdBase} display -p '#{tmate_ssh}'")"
     tmateWeb="$(bash -lc "${tmateCmdBase} display -p '#{tmate_web}'")"
     
-    if [ $tmateWeb == "" ] && [ $tmateSSH == "" ]; then
+    if [ "$tmateWeb" == "" ] && [ "$tmateSSH" == "" ]; then
       createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
     fi
     
@@ -53,7 +53,7 @@ createNewSession() {
   bash -lc "${newSessionCmd}"
 
   echo "${waitTmateReadyCmd}"
-  bash -lc "${waitTmateReadyCmd}" &
-
+  bash -lc "${waitTmateReadyCmd}" && \
+  
   echo "Created new session successfully"
 }
