@@ -62,8 +62,8 @@ jobs:
         # start tmate
         echo "Creating new session"
         
-        echo "${tmateCmdBase} ${setDefaultCommand} ${namedSessionCommand} new-session -d"
-        bash -lc "${tmateCmdBase} ${setDefaultCommand} ${namedSessionCommand} new-session -d"
+        echo "${tmateCmdBase} ${namedSessionCommand} ${setDefaultCommand} new-session -d"
+        bash -lc "${tmateCmdBase} ${namedSessionCommand} ${setDefaultCommand} new-session -d"
         
         echo "${tmateCmdBase} wait tmate-ready"
         bash -lc "${tmateCmdBase} wait tmate-ready"
