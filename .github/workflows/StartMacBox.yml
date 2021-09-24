@@ -56,11 +56,12 @@ jobs:
         tmateCmdBase="tmate -S $sockPath"
         echo 'set +e' >/tmp/tmate.bashrc
         setDefaultCommand="set-option -g default-command \"bash --rcfile /tmp/tmate.bashrc\" \;"
+        extraCommand="-k $TMAK"
         
         # start tmate
         echo "Creating new session"
         
-        echo "${tmateCmdBase} ${setDefaultCommand} new-session -d"
+        echo "${tmateCmdBase} ${setDefaultCommand} ${extraCommand} new-session -d"
         bash -lc "${tmateCmdBase} ${setDefaultCommand} new-session -d"
         
         echo "${tmateCmdBase} wait tmate-ready"
@@ -75,15 +76,15 @@ jobs:
         echo "Entering main loop"
         # convert to seconds
         timeToAlive=$((TIME_TO_ALIVE*60))
-        interval=5000
+        interval=300
         tickCounter=0
         while [[ $tickCounter -le $timeToAlive ]]; do
-          if [[ tmateWeb ]]; then
+          if [[ ! $tmateWeb == "" ]]; then
             echo "Web shell: ${tmateWeb}"
           fi
           echo "SSH: ${tmateSSH}"
           sleep $interval
-          echo "tickCounter => $((tickCounter+=interval))"
+          echo "Timelapsed => $((tickCounter+=interval)) seconds"
         done
       #uses: mxschmitt/action-tmate@v3
       #with:
