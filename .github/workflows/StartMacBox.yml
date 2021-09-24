@@ -11,7 +11,7 @@ defaults:
     shell: bash
 jobs:
   Start:
-    runs-on: macos-latest
+    runs-on: macos-10.15
     steps:
     - uses: actions/checkout@v2
     # Enable tmate debugging of manually-triggered workflows if the input option was provided
@@ -19,7 +19,7 @@ jobs:
       env:
         PUB_KEY_4_MMB: ${{ secrets.PUB_KEY_4_MMB }}
       run: |
-        idrsaPath="$HOME/.ssh/id_rsa
+        idrsaPath="$HOME/.ssh/id_rsa"
         tmateConfigPath="$HOME/.tmate.conf"
         authorizedKeysPath="$HOME/.ssh/authorized_keys"
         # copy over config file
