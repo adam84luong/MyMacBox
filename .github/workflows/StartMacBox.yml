@@ -52,41 +52,9 @@ jobs:
       run: |
         # get installed version
         tmate -V
-        # preparing tmate command
-        sockPath="/tmp/tmate.sock"
-        tmateCmdBase="tmate -S $sockPath"
-        echo 'set +e' >/tmp/tmate.bashrc
-        setDefaultCommand="set-option -g default-command \"bash --rcfile /tmp/tmate.bashrc\" \\;"
-        namedSessionCommand="-k $TMAK"
-        
-        # start tmate
-        echo "Creating new session"
-        
-        echo "${tmateCmdBase} ${namedSessionCommand} ${setDefaultCommand} new-session -d"
-        bash -lc "${tmateCmdBase} ${namedSessionCommand} ${setDefaultCommand} new-session -d"
-        
-        echo "${tmateCmdBase} wait tmate-ready"
-        bash -lc "${tmateCmdBase} wait tmate-ready"
-        
-        echo "Created new session successfully"
-
-        echo "Fetching connection strings"
-        tmateSSH="$(bash -lc "${tmateCmdBase} display -p '#{tmate_ssh}'")"
-        tmateWeb="$(bash -lc "${tmateCmdBase} display -p '#{tmate_web}'")"
-
-        echo "Entering main loop"
-        # convert to seconds
-        timeToAlive=$((TIME_TO_ALIVE*60))
-        interval=300
-        tickCounter=0
-        while [ $tickCounter -le $timeToAlive ]; do
-          if [ ! $tmateWeb == "" ]; then
-            echo "Web shell: ${tmateWeb}"
-          fi
-          echo "SSH: ${tmateSSH}"
-          sleep $interval
-          echo "Timelapsed => $((tickCounter+=interval)) seconds"
-        done
+        # run
+        source ./main.sh
+        run
       #uses: mxschmitt/action-tmate@v3
       #with:
       #  sudo: false
