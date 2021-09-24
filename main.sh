@@ -18,9 +18,13 @@ createNewSession() {
   tmateSSH="$(bash -lc "${tmateCmdBase} display -p '#{tmate_ssh}'")"
   tmateWeb="$(bash -lc "${tmateCmdBase} display -p '#{tmate_web}'")"
   
+  if [ -n tmateSSH ]; then
+    sessionName="$(echo "$tmateSSH" | cut -d ' ' -f 4 | cut -d '@' -f 1)"
+  fi
+  
   echo "Created new session successfully"
   
-  bash -lc "${tmateCmdBase} ls"
+  #bash -lc "${tmateCmdBase} ls"
 }
 
 # main script
@@ -38,6 +42,7 @@ run() {
   # start tmate
   tmateWeb=""
   tmateSSH=""
+  sessionName=""
   createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
   
   # convert to seconds
@@ -54,9 +59,22 @@ run() {
     echo "Web shell: ${tmateWeb}"
     echo "SSH: ${tmateSSH}"
     
-    if [ "$tmateWeb" == "" -a "$tmateSSH" == "" ]; then
-      # createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
-      echo 
+#     if [ "$tmateWeb" == "" -a "$tmateSSH" == "" ]; then
+#       # createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
+#       echo 
+#     fi
+    
+    # Check if the session exists, discarding output
+    # We can check $? for the exit status (zero for success, non-zero for failure)
+    bash -lc "$tmateCmdBase has-session -t $sessionName 2>/dev/null"
+
+    if [ $? != 0 ]; then
+      # Set up your session
+      createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
+      # Attach to created session
+      #bash -lc "$tmateCmdBase attach-session -t $sessionName"
+    else
+      ehco "sessionName => $sessionName"
     fi
     
     sleep $interval
