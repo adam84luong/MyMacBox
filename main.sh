@@ -19,6 +19,8 @@ run() {
   interval=300
   tickCounter=0
   
+  echo "$timeToAlive"
+  
   echo "Entering main loop"
   while [ $tickCounter -lt $timeToAlive ]; do
     echo "Fetching connection strings"
