@@ -29,6 +29,7 @@ jobs:
         authorizedKeysPath="$sshBasePath/authorized_keys"
         # copy over config file
         cp ./.tmate.conf $tmateConfigPath
+        echo "set tmate-authorized-keys \"$HOME/.ssh/authorized_keys\"" >> $tmateConfigPath
         cat "$tmateConfigPath"
         # generate authorized_keys file
         echo "$PUB_KEY_4_MMB" >> "$authorizedKeysPath"
@@ -56,13 +57,13 @@ jobs:
         tmateCmdBase="tmate -S $sockPath"
         echo 'set +e' >/tmp/tmate.bashrc
         setDefaultCommand="set-option -g default-command \"bash --rcfile /tmp/tmate.bashrc\" \;"
-        extraCommand="-k $TMAK"
+        namedSessionCommand="-k $TMAK"
         
         # start tmate
         echo "Creating new session"
         
-        echo "${tmateCmdBase} ${setDefaultCommand} ${extraCommand} new-session -d"
-        bash -lc "${tmateCmdBase} ${setDefaultCommand} new-session -d"
+        echo "${tmateCmdBase} ${setDefaultCommand} ${namedSessionCommand} new-session -d"
+        bash -lc "${tmateCmdBase} ${setDefaultCommand} ${namedSessionCommand} new-session -d"
         
         echo "${tmateCmdBase} wait tmate-ready"
         bash -lc "${tmateCmdBase} wait tmate-ready"
@@ -78,8 +79,8 @@ jobs:
         timeToAlive=$((TIME_TO_ALIVE*60))
         interval=300
         tickCounter=0
-        while [[ $tickCounter -le $timeToAlive ]]; do
-          if [[ ! $tmateWeb == "" ]]; then
+        while [ $tickCounter -le $timeToAlive ]; do
+          if [ ! $tmateWeb == "" ]; then
             echo "Web shell: ${tmateWeb}"
           fi
           echo "SSH: ${tmateSSH}"
