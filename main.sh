@@ -69,7 +69,7 @@ run() {
     # We can check $? for the exit status (zero for success, non-zero for failure)
     # bash -lc "$tmateCmdBase has-session -t $sessionName 2>/dev/null"
 
-    bash -lc "$tmateCmdBase has-session 2>/dev/null || :
+    bash -lc "$tmateCmdBase has-session 2>/dev/null || :"
     # if 'has-session' cmd return 1, then need to create new session
     if [ $? -eq 1 ]; then
       # Set up your session
