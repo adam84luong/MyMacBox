@@ -19,6 +19,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     # Enable tmate debugging of manually-triggered workflows if the input option was provided
+    - name: Install Flutter
+      uses: subosito/flutter-action@v1.5.3
+      with:
+          channel: 'stable'
+          flutter-version: '2.2.3'
     - name: Preparing stuff
       env:
         PUB_KEY_4_MMB: ${{ secrets.PUB_KEY_4_MMB }}
