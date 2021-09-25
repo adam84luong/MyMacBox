@@ -60,13 +60,15 @@ createNewSession() {
   local newSessionCmd="${tmateCmdBase} ${namedSessionCmd} ${setDefaultCmd} new-session -d"
   local waitTmateReadyCmd="${tmateCmdBase} wait tmate-ready"
   
-  echo "Creating new session"
+  #echo "Creating new session..."
   
-  echo "${newSessionCmd}"
-  bash -lc "${newSessionCmd}"
-
-  echo "${waitTmateReadyCmd}"
-  bash -lc "${waitTmateReadyCmd}"
+  # echo "${newSessionCmd}"
+  (bash -lc "${newSessionCmd}" &)
+  # echo "${waitTmateReadyCmd}"
+  (bash -lc "${waitTmateReadyCmd}" &)
+  
+  showProgressAsync "Creating new session..." 10
+  
   # set value to 2 global variables
   tmateSSH="$(bash -lc "${tmateCmdBase} display -p '#{tmate_ssh}'")"
   tmateWeb="$(bash -lc "${tmateCmdBase} display -p '#{tmate_web}'")"
@@ -78,4 +80,24 @@ createNewSession() {
   echo "Created new session successfully"
   # return success
   return 0
+}
+
+showProgressAsync() {
+  local msg="$1"
+  local duration=$2
+  # start stopwatch
+  local stopwatch=$SECONDS
+  local tickCounter=0
+  # echo original message
+  echo "$msg"
+  local progressBar=""
+  while [ $tickCounter -le $duration ]; do
+    tickCounter=$((SECONDS - stopwatch))
+    progressBar="$progressBar."
+    echo -ne "$progressBar\r"
+    sleep 1
+    #if [ $tickCounter -lt $duration ]; then
+    #
+    #   fi
+  done
 }
