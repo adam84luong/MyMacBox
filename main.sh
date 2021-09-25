@@ -10,21 +10,19 @@ startMyBox() {
   local tmateCmdBase="tmate -S $sockPath"
   local namedSessionCmd="-k $TMAK -n mytmate"
   
-  # start tmate
-  tmateWeb=""
-  tmateSSH=""
-  sessionName=""
-  createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
+  local tmateWeb=""
+  local tmateSSH=""
+  local sessionName=""
+  # createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
+  local tmateLsResult=""
   
   # convert to seconds
-  timeToAlive=$((TIME_TO_ALIVE*60))
+  local timeToAlive=$((TIME_TO_ALIVE*60))
   # seconds
-  interval=60
-  tickCounter=0
+  local interval=60
+  local tickCounter=0
   
   echo "timeToAlive in seconds => $timeToAlive"
-
-  local tmateLsResult=""
   
   echo "Entering main loop"
   while [ $tickCounter -lt $timeToAlive ]; do
@@ -37,16 +35,18 @@ startMyBox() {
     # if 'tmate ls' not return like '...: 1 windows', then need to revew tmate session
     if [ -z "$(grep -m1 "1 windows" <<< "$tmateLsResult")" ]; then
       # Set up your session
-      echo "Need to re-new tmate session"
       createNewSession "$tmateCmdBase" "$namedSessionCmd" "$setDefaultCmd"
+      # ouput the connection strings to ssh to Mac box
+      echo "SSH: ${tmateSSH} | Web shell: ${tmateWeb}"
+      # output timelapsed
+      echo "Timelapsed => $tickCounter seconds"
     fi
-    # ouput the connection strings to ssh to Mac box
-    echo "SSH: ${tmateSSH} | Web shell: ${tmateWeb}"
     # sleep N seconds
     sleep $interval
-    # output timelapsed
-    echo "Timelapsed => $((tickCounter+=interval)) seconds"
+    # pumb up tick count
+    tickCounter=$((tickCounter + interval))
   done
+  echo "Timelapsed => $tickCounter seconds"
   # return success
   return 0
 }
