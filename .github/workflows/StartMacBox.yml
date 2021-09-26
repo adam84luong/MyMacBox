@@ -41,11 +41,18 @@ jobs:
         #ls -l "$HOME/Library/flutter" && \
         cat "$HOME/.bashrc" && \
         echo "$PATH" && \
-        which flutter
+        which flutter && \
         flutter --version && \
         flutter config --no-analytics && \
         #yes | flutter doctor --android-licenses -v && \
-        flutter doctor
+        flutter doctor && \
+        # select right version for xcode and pod
+        sudo xcode-select --switch /Applications/Xcode_12.4.app/Contents/Developer && \
+        xcodebuild -version && \
+        gem uninstall cocoapods --executables --all && \
+        gem install cocoapods --version 1.10.1 && \
+        gem list '^cocoapods$' --no-verbose && \
+        java -version
     - name: Install tmate client
       run: |
         # install tmate client
