@@ -33,9 +33,15 @@ jobs:
         echo "export PATH=\"\$HOME/Library/flutter/bin:\$PATH\"" >> "$HOME/.bashrc" && \
         source "$HOME/.bashrc" && \
         cat "$HOME/.bashrc" && \
-        echo "$PATH"
+        echo "$PATH" && \
+        which flutter
     - name: Verify Flutter Instalation
       run: |
+        ls -l "$HOME/Library" && \
+        ls -l "$HOME/Library/flutter" && \
+        cat "$HOME/.bashrc" && \
+        echo "$PATH" && \
+        which flutter
         flutter --version && \
         flutter config --no-analytics && \
         yes | flutter doctor --android-licenses -v && \
