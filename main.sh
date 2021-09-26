@@ -56,11 +56,11 @@ startMyBox() {
 preparingStuff() {
   sshBasePath="$HOME/.ssh"
   idrsaPath="$sshBasePath/id_rsa"
-  tmateConfigPath="~/.tmate.conf"
+  tmateConfigPath="$HOME/.tmate.conf"
   authorizedKeysPath="$sshBasePath/authorized_keys"
   # copy over config file
   cp ./.tmate.conf $tmateConfigPath
-  echo "set tmate-authorized-keys \"~/.ssh/authorized_keys\"" >> $tmateConfigPath
+  echo "set tmate-authorized-keys \"$HOME/.ssh/authorized_keys\"" >> $tmateConfigPath
   cat "$tmateConfigPath"
   # generate authorized_keys file
   echo "$PUB_KEY_4_MMB" >> "$authorizedKeysPath"
