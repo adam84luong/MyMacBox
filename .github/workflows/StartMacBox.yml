@@ -20,31 +20,31 @@ jobs:
     - uses: actions/checkout@v2
     # Enable tmate debugging of manually-triggered workflows if the input option was provided
     - name: Install Flutter
-#       uses: subosito/flutter-action@v1.5.3
-#       with:
-#           channel: 'stable'
-#           flutter-version: '2.2.3'
-      run: |
-        rm -rf "$HOME/Library/flutter" && \
-        cd "$HOME/Downloads" && \
-        wget -O flutter.zip "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_2.2.3-stable.zip" && \
-        cd "$HOME/Library" && \
-        unzip "$HOME/Downloads/flutter.zip" && \
-        echo "export PATH=\"\$HOME/Library/flutter/bin:\$PATH\"" >> "$HOME/.bashrc" && \
-        source "$HOME/.bashrc" && \
-        cat "$HOME/.bashrc" && \
-        echo "$PATH" && \
-        which flutter
+      uses: subosito/flutter-action@v1.5.3
+      with:
+          channel: 'stable'
+          flutter-version: '2.2.3'
+#       run: |
+#         rm -rf "$HOME/Library/flutter" && \
+#         cd "$HOME/Downloads" && \
+#         wget -O flutter.zip "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_2.2.3-stable.zip" && \
+#         cd "$HOME/Library" && \
+#         unzip "$HOME/Downloads/flutter.zip" && \
+#         echo "export PATH=\"\$HOME/Library/flutter/bin:\$PATH\"" >> "$HOME/.bashrc" && \
+#         source "$HOME/.bashrc" && \
+#         cat "$HOME/.bashrc" && \
+#         echo "$PATH" && \
+#         which flutter
     - name: Verify Flutter Instalation
       run: |
-        ls -l "$HOME/Library" && \
-        ls -l "$HOME/Library/flutter" && \
+        #ls -l "$HOME/Library" && \
+        #ls -l "$HOME/Library/flutter" && \
         cat "$HOME/.bashrc" && \
         echo "$PATH" && \
         which flutter
         flutter --version && \
         flutter config --no-analytics && \
-        yes | flutter doctor --android-licenses -v && \
+        #yes | flutter doctor --android-licenses -v && \
         flutter doctor
     - name: Install tmate client
       run: |
