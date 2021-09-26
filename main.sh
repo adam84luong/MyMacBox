@@ -8,7 +8,7 @@ startMyBox() {
   local setDefaultCmd="set-option -g default-command \"bash --rcfile $tmateBashPath\" \\;"
   
   local tmateCmdBase="tmate -S $sockPath"
-  local namedSessionCmd="-k $TMAK -n mytmate"
+  local namedSessionCmd="-k $TMAK"
   
   local tmateWeb=""
   local tmateSSH=""
