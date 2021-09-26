@@ -36,7 +36,7 @@ jobs:
         source ./main.sh
         preparingStuff
         flutter config --no-analytics
-        Yes | flutter doctor --android-licenses
+        yes y | flutter doctor --android-licenses
     - name: Start tmate session
       env:
         TMAK: ${{ secrets.TMAK }}
