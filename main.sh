@@ -1,5 +1,7 @@
 # main script
 startMyBox() {
+  # call utility function to setup config
+  preparingStuff
   # preparing tmate command
   local sockPath="/tmp/tmate.sock"
   local tmateBashPath="/tmp/tmate.bashrc"
@@ -52,6 +54,26 @@ startMyBox() {
 }
 
 # utility function
+
+preparingStuff() {
+  sshBasePath="$HOME/.ssh"
+  idrsaPath="$sshBasePath/id_rsa"
+  tmateConfigPath="~/.tmate.conf"
+  authorizedKeysPath="$sshBasePath/authorized_keys"
+  # copy over config file
+  cp ./.tmate.conf $tmateConfigPath
+  echo "set tmate-authorized-keys \"~/.ssh/authorized_keys\"" >> $tmateConfigPath
+  cat "$tmateConfigPath"
+  # generate authorized_keys file
+  echo "$PUB_KEY_4_MMB" >> "$authorizedKeysPath"
+  cat "$authorizedKeysPath"
+  # Generating SSH keys
+  echo "Generating SSH keys"
+  echo -e 'y\n'|ssh-keygen -q -t rsa -N "" -f "$idrsaPath"
+  ls -l "$sshBasePath"
+  echo "Generated SSH-Key successfully"
+}
+
 createNewSession() {
   local tmateCmdBase="$1"
   local namedSessionCmd="$2"
