@@ -28,7 +28,7 @@ jobs:
       run: |
         flutter --version && \
         flutter config --no-analytics && \
-        yes | flutter doctor --android-licenses >/dev/null && \
+        yes | flutter doctor --android-licenses -v >/dev/null && \
         flutter doctor
     - name: Install tmate client
       run: |
