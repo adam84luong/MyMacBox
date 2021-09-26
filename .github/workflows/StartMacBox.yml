@@ -60,6 +60,7 @@ jobs:
     - name: Preparing stuff
       env:
         PUB_KEY_4_MMB: ${{ secrets.PUB_KEY_4_MMB }}
+        TMATE_SERVER_CFG: ${{ secrets.TMATE_SERVER_CFG }}
       run: |
         # call utility function to setup config
         source ./main.sh && \
