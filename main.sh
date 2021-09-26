@@ -68,6 +68,8 @@ createNewSession() {
   
   showProgressAsync "Creating new session..." 10
   
+  wait $!
+  
   # set value to 2 global variables
   tmateSSH="$(bash -lc "${tmateCmdBase} display -p '#{tmate_ssh}'")"
   tmateWeb="$(bash -lc "${tmateCmdBase} display -p '#{tmate_web}'")"
