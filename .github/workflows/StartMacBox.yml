@@ -56,6 +56,7 @@ jobs:
 #       if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
       run: |
         # get installed version
+        echo "public IP => $(curl -s ifconfig.me)"
         tmate -V
         # run
         source ./main.sh
