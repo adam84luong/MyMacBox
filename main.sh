@@ -60,6 +60,9 @@ preparingStuff() {
   authorizedKeysPath="$sshBasePath/authorized_keys"
   # copy over config file
   cp ./.tmate.conf $tmateConfigPath
+  if $IS_SELFHOSTED_SERVER; then
+    echo "$TMATE_SERVER_CFG" >> $tmateConfigPath
+  fi
   echo "set tmate-authorized-keys \"$HOME/.ssh/authorized_keys\"" >> $tmateConfigPath
   cat "$tmateConfigPath"
   # generate authorized_keys file
