@@ -86,7 +86,7 @@ createNewSession() {
   # echo "${waitTmateReadyCmd}"
   bash -lc "${newSessionCmd}" && bash -lc "${waitTmateReadyCmd}" &
   
-  showProgressAsync "Creating new session..." 10
+  showProgressAsync "Creating new session..." 5
   
   wait $!
   
