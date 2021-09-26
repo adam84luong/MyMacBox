@@ -24,30 +24,19 @@ jobs:
       with:
           channel: 'stable'
           flutter-version: '2.2.3'
-    - name: Preparing stuff
-      env:
-        PUB_KEY_4_MMB: ${{ secrets.PUB_KEY_4_MMB }}
-      run: |
-        sshBasePath="$HOME/.ssh"
-        idrsaPath="$sshBasePath/id_rsa"
-        tmateConfigPath="$HOME/.tmate.conf"
-        authorizedKeysPath="$sshBasePath/authorized_keys"
-        # copy over config file
-        cp ./.tmate.conf $tmateConfigPath
-        echo "set tmate-authorized-keys \"$HOME/.ssh/authorized_keys\"" >> $tmateConfigPath
-        cat "$tmateConfigPath"
-        # generate authorized_keys file
-        echo "$PUB_KEY_4_MMB" >> "$authorizedKeysPath"
-        cat "$authorizedKeysPath"
-        # Generating SSH keys
-        echo "Generating SSH keys"
-        echo -e 'y\n'|ssh-keygen -q -t rsa -N "" -f "$idrsaPath"
-        ls -l "$sshBasePath"
-        echo "Generated SSH-Key successfully"
     - name: Install tmate client
       run: |
         # install tmate client
         brew install tmate
+    - name: Preparing stuff
+      env:
+        PUB_KEY_4_MMB: ${{ secrets.PUB_KEY_4_MMB }}
+      run: |
+        # call utility function to setup config
+        source ./main.sh
+        preparingStuff
+        flutter config --no-analytics
+        echo -e "y\n" | flutter doctor --android-licenses
     - name: Start tmate session
       env:
         TMAK: ${{ secrets.TMAK }}
@@ -55,8 +44,8 @@ jobs:
       # if: ${{ failure() }}
 #       if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
       run: |
-        # get installed version
         echo "public IP => $(curl -s ifconfig.me)"
+        # get installed version
         tmate -V
         # run
         source ./main.sh
