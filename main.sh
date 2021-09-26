@@ -63,9 +63,8 @@ createNewSession() {
   #echo "Creating new session..."
   
   # echo "${newSessionCmd}"
-  (bash -lc "${newSessionCmd}" &)
   # echo "${waitTmateReadyCmd}"
-  (bash -lc "${waitTmateReadyCmd}" &)
+  bash -lc "${newSessionCmd}" && bash -lc "${waitTmateReadyCmd}" &
   
   showProgressAsync "Creating new session..." 10
   
