@@ -33,12 +33,8 @@ jobs:
         PUB_KEY_4_MMB: ${{ secrets.PUB_KEY_4_MMB }}
       run: |
         # call utility function to setup config
-        source ./main.sh
-        preparingStuff
-        flutter --version
-        flutter config --no-analytics
-        yes | flutter doctor --android-licenses
-        flutter doctor
+        source ./main.sh && preparingStuff
+        flutter --version && flutter config --no-analytics && yes | flutter doctor --android-licenses >/dev/null && flutter doctor
     - name: Start tmate session
       env:
         TMAK: ${{ secrets.TMAK }}
