@@ -31,7 +31,9 @@ jobs:
         cd "$HOME/Library" && \
         unzip "$HOME/Downloads/flutter.zip" && \
         echo "export PATH=\"\$HOME/Library/flutter/bin:\$PATH\"" >> "$HOME/.bashrc" && \
-        source "$HOME/.bashrc"
+        source "$HOME/.bashrc" && \
+        cat "$HOME/.bashrc" && \
+        echo "$PATH"
     - name: Verify Flutter Instalation
       run: |
         flutter --version && \
