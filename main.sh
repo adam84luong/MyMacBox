@@ -1,7 +1,5 @@
 # main script
 startMyBox() {
-  # call utility function to setup config
-  preparingStuff
   # preparing tmate command
   local sockPath="/tmp/tmate.sock"
   local tmateBashPath="/tmp/tmate.bashrc"
