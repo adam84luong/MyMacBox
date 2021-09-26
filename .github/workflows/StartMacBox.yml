@@ -27,11 +27,11 @@ jobs:
       run: |
         rm -rf "$HOME/Library/flutter" && \
         cd "$HOME/Downloads" && \
-        wget https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_2.2.3-stable.zip -O flutter.zip && \
+        wget -O flutter.zip "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_2.2.3-stable.zip" && \
         cd "$HOME/Library" && \
         unzip "$HOME/Downloads/flutter.zip" && \
-        echo "export PATH=\"\$HOME/Library/flutter/bin:\$PATH\"" >> $HOME/.bashrc && \
-        source $HOME/.bashrc &&
+        echo "export PATH=\"\$HOME/Library/flutter/bin:\$PATH\"" >> "$HOME/.bashrc" && \
+        source "$HOME/.bashrc"
     - name: Verify Flutter Instalation
       run: |
         flutter --version && \
