@@ -7,11 +7,11 @@ on:
 #         required: false
 #         default: 'false'
       timeout:
-        description: 'How much time the box alive (in minutes)'     
+        description: 'How long will the box up? (in minutes)'     
         required: false
-        default: '60'
+        default: '330'
       isSelfhostedServer:
-        description: 'is tmate server selfhosted'     
+        description: 'Is tmate server selfhosted?'     
         required: false
         default: 'false'
 defaults:
