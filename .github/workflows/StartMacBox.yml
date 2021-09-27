@@ -8,11 +8,11 @@ on:
 #         default: 'false'
       timeout:
         description: 'How long will the box up? (in minutes)'     
-        required: false
+        required: true
         default: '330'
       isSelfhostedServer:
         description: 'Is tmate server selfhosted?'     
-        required: false
+        required: true
         default: 'false'
 defaults:
   run:
