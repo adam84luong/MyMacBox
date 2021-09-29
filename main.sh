@@ -80,7 +80,7 @@ createNewSession() {
   local namedSessionCmd="$2"
   local setDefaultCmd="$3"
   
-  local newSessionCmd="${tmateCmdBase} ${namedSessionCmd} ${setDefaultCmd} -F new-session -d"
+  local newSessionCmd="${tmateCmdBase} -F ${namedSessionCmd} ${setDefaultCmd} new-session -d"
   local waitTmateReadyCmd="${tmateCmdBase} wait tmate-ready"
   
   #echo "Creating new session..."
