@@ -8,7 +8,7 @@ startMyBox() {
   local setDefaultCmd="set-option -g default-command \"bash --rcfile $tmateBashPath\" \\;"
   
   local tmateCmdBase="tmate -S $sockPath"
-  local namedSessionCmd="-k $TMAK"
+  local namedSessionCmd="-k $TMAK -F"
   
   local tmateWeb=""
   local tmateSSH=""
@@ -80,7 +80,7 @@ createNewSession() {
   local namedSessionCmd="$2"
   local setDefaultCmd="$3"
   
-  local newSessionCmd="${tmateCmdBase} -F ${namedSessionCmd} ${setDefaultCmd} new-session -d"
+  local newSessionCmd="${tmateCmdBase} ${namedSessionCmd} ${setDefaultCmd} new-session -d"
   local waitTmateReadyCmd="${tmateCmdBase} wait tmate-ready"
   
   #echo "Creating new session..."
