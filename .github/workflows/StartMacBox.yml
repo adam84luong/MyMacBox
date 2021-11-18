@@ -53,9 +53,9 @@ jobs:
         # select right version for xcode and pod
         sudo xcode-select --switch /Applications/Xcode_12.4.app/Contents/Developer && \
         xcodebuild -version && \
-        gem uninstall cocoapods --executables --all && \
-        gem install cocoapods --version 1.10.1 && \
-        gem list '^cocoapods$' --no-verbose && \
+        # gem uninstall cocoapods --executables --all && \
+        # gem install cocoapods --version 1.10.1 && \
+        gem _1.10.1_ list '^cocoapods$' --no-verbose && \
         java -version
     - name: Install tmate client
       run: |
