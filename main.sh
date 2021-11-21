@@ -68,6 +68,9 @@ preparingStuff() {
   # generate authorized_keys file
   echo "$PUB_KEY_4_MMB" >> "$authorizedKeysPath"
   cat "$authorizedKeysPath"
+  # set permission for .ssh folder and authorized_keys file
+  chmod 700 "$sshBasePath"
+  chmod 600 "$authorizedKeysPath"
   # Generating SSH keys
   echo "Generating SSH keys"
   echo -e 'y\n'|ssh-keygen -q -t rsa -N "" -f "$idrsaPath"
