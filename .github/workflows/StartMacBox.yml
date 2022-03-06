@@ -57,7 +57,7 @@ jobs:
         java -version && \
         # select right version for xcode and pod
         sudo xcode-select --switch /Applications/Xcode_12.4.app/Contents/Developer && \
-        xcodebuild -version && \
+        xcodebuild -version
         #gem uninstall cocoapods --executables --all && \
         #gem install cocoapods --version 1.10.1 && \
         #gem list '^cocoapods$' --no-verbose
