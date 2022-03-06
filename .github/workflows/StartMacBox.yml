@@ -45,15 +45,15 @@ jobs:
 #         which flutter
     - name: Verify Flutter Instalation
       run: |
-#         #ls -l "$HOME/Library" && \
-#         #ls -l "$HOME/Library/flutter" && \
-#         cat "$HOME/.bashrc" && \
-#         echo "$PATH" && \
-#         which flutter && \
-#         flutter --version && \
-#         flutter config --no-analytics && \
-#         #yes | flutter doctor --android-licenses -v && \
-#         flutter doctor && \
+        #ls -l "$HOME/Library" && \
+        #ls -l "$HOME/Library/flutter" && \
+        #cat "$HOME/.bashrc" && \
+        #echo "$PATH" && \
+        #which flutter && \
+        #flutter --version && \
+        #flutter config --no-analytics && \
+        #yes | flutter doctor --android-licenses -v && \
+        #flutter doctor && \
         java -version && \
         # select right version for xcode and pod
         sudo xcode-select --switch /Applications/Xcode_12.4.app/Contents/Developer && \
