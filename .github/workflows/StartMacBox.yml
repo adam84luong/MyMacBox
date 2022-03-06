@@ -27,11 +27,11 @@ jobs:
 #         gem uninstall cocoapods --executables --all && \
 #         gem install cocoapods --version 1.10.1
     # Enable tmate debugging of manually-triggered workflows if the input option was provided
-    - name: Install Flutter
-      uses: subosito/flutter-action@v1.5.3
-      with:
-          channel: 'stable'
-          flutter-version: '2.2.3'
+#     - name: Install Flutter
+#       uses: subosito/flutter-action@v1.5.3
+#       with:
+#           channel: 'stable'
+#           flutter-version: '2.2.3'
 #       run: |
 #         rm -rf "$HOME/Library/flutter" && \
 #         cd "$HOME/Downloads" && \
@@ -45,21 +45,21 @@ jobs:
 #         which flutter
     - name: Verify Flutter Instalation
       run: |
-        #ls -l "$HOME/Library" && \
-        #ls -l "$HOME/Library/flutter" && \
-        cat "$HOME/.bashrc" && \
-        echo "$PATH" && \
-        which flutter && \
-        flutter --version && \
-        flutter config --no-analytics && \
-        #yes | flutter doctor --android-licenses -v && \
-        flutter doctor && \
+#         #ls -l "$HOME/Library" && \
+#         #ls -l "$HOME/Library/flutter" && \
+#         cat "$HOME/.bashrc" && \
+#         echo "$PATH" && \
+#         which flutter && \
+#         flutter --version && \
+#         flutter config --no-analytics && \
+#         #yes | flutter doctor --android-licenses -v && \
+#         flutter doctor && \
         java -version && \
         # select right version for xcode and pod
         sudo xcode-select --switch /Applications/Xcode_12.4.app/Contents/Developer && \
         xcodebuild -version && \
-        # gem uninstall cocoapods --executables --all && \
-        # gem install cocoapods --version 1.10.1 && \
+        gem uninstall cocoapods --executables --all && \
+        gem install cocoapods --version 1.10.1 && \
         gem list '^cocoapods$' --no-verbose
     - name: Install tmate client
       run: |
