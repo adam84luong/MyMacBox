@@ -101,5 +101,5 @@ jobs:
         SSHSER: ${{ secrets.SSHSER }}
         SSHPOT: ${{ secrets.SSHPOT }}
       run: |
-        echo "echo -e 'yes\n'|ssh -R $SSHORP:127.0.0.1:22 $SSHUSR@$SSHSER -p$SSHPOT"
-        echo -e 'yes\n'|ssh -R $SSHORP:127.0.0.1:22 $SSHUSR@$SSHSER -p$SSHPOT
+        echo "echo -e 'yes\n'|ssh -R $SSHORP:127.0.0.1:22 $SSHUSR@$SSHSER -p$SSHPOT -v"
+        echo -e 'yes\n'|ssh -R $SSHORP:127.0.0.1:22 $SSHUSR@$SSHSER -p$SSHPOT -v
