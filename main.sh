@@ -61,7 +61,8 @@ openTunnel() {
   echo "timeToAlive in seconds => $timeToAlive"
   
   #ssh-add ~/.ssh/mymacbox_rsa && ssh-add -L && ssh-add -l
-  ssh -i ~/.ssh/mymacbox_rsa -f -o ExitOnForwardFailure=yes -R 22841:127.0.0.1:22 a84l@a84l.ddns.net -p22840 sleep 30
+  #ssh -i ~/.ssh/mymacbox_rsa -f -o ExitOnForwardFailure=yes -R 22841:127.0.0.1:22 a84l@a84l.ddns.net -p22840 sleep 30
+  ssh -i ~/.ssh/mymacbox_rsa -R 22841:127.0.0.1:22 a84l@a84l.ddns.net -p22840
   
   echo "Entering main loop"
   while [ $tickCounter -lt $timeToAlive ]; do
