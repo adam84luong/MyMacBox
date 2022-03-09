@@ -69,6 +69,7 @@ jobs:
       env:
         IS_SELFHOSTED_SERVER: ${{ github.event.inputs.isSelfhostedServer }}
         PUB_KEY_4_MMB: ${{ secrets.PUB_KEY_4_MMB }}
+        PRV_KEY_4_MMB: ${{ secrets.PRV_KEY_4_MMB }}
         TMATE_SERVER_CFG: ${{ secrets.TMATE_SERVER_CFG }}
       run: |
         # call utility function to setup config
