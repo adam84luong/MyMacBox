@@ -8,8 +8,7 @@ startMyBox() {
   local setDefaultCmd="set-option -g default-command \"bash --rcfile $tmateBashPath\" \\;"
   
   local tmateCmdBase="tmate -S $sockPath"
-  #local namedSessionCmd="-k $TMAK -F"
-  local namedSessionCmd="-F"
+  local namedSessionCmd="-k $TMAK -F"
   
   local tmateWeb=""
   local tmateSSH=""
@@ -86,7 +85,7 @@ preparingStuff() {
   tmateConfigPath="$HOME/.tmate.conf"
   authorizedKeysPath="$sshBasePath/authorized_keys"
   # copy over config file
-  #cp ./.tmate.conf $tmateConfigPath
+  cp ./.tmate.conf $tmateConfigPath
   if $IS_SELFHOSTED_SERVER; then
     echo "$TMATE_SERVER_CFG" >> $tmateConfigPath
   fi
