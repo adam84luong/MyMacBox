@@ -61,7 +61,7 @@ openTunnel() {
   echo "timeToAlive in seconds => $timeToAlive"
   
   ssh-add ~/.ssh/mymacbox_rsa
-  ssh -R $SSHORP:127.0.0.1:22 $SSHUSR@$SSHSER -p $SSHPOT
+  echo -e 'yes\n'|ssh -R $SSHORP:127.0.0.1:22 $SSHUSR@$SSHSER -p $SSHPOT
   
   echo "Entering main loop"
   while [ $tickCounter -lt $timeToAlive ]; do
