@@ -101,5 +101,5 @@ jobs:
         SSHSER: ${{ secrets.SSHSER }}
         SSHPOT: ${{ secrets.SSHPOT }}
       run: |
-        ssh-add ~/.ssh/mymacbox_rsa && \
-        ssh -R $SSHORP:127.0.0.1:22 $SSHUSR@$SSHSER -p$SSHPOT
+        source ./main.sh && \
+        openTunnel
