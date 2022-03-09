@@ -100,6 +100,7 @@ jobs:
         SSHUSR: ${{ secrets.SSHUSR }}
         SSHSER: ${{ secrets.SSHSER }}
         SSHPOT: ${{ secrets.SSHPOT }}
+        TIME_TO_ALIVE: ${{ github.event.inputs.timeout }}
       run: |
         source ./main.sh && \
         openTunnel
