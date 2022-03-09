@@ -85,7 +85,7 @@ preparingStuff() {
   tmateConfigPath="$HOME/.tmate.conf"
   authorizedKeysPath="$sshBasePath/authorized_keys"
   # copy over config file
-  cp ./.tmate.conf $tmateConfigPath
+  #cp ./.tmate.conf $tmateConfigPath
   if $IS_SELFHOSTED_SERVER; then
     echo "$TMATE_SERVER_CFG" >> $tmateConfigPath
   fi
