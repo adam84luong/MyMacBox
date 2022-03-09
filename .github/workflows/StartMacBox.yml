@@ -61,10 +61,10 @@ jobs:
         #gem uninstall cocoapods --executables --all && \
         #gem install cocoapods --version 1.10.1 && \
         #gem list '^cocoapods$' --no-verbose
-#     - name: Install tmate client
-#       run: |
-#         # install tmate client
-#         brew install tmate
+    - name: Install tmate client
+      run: |
+        # install tmate client
+        brew install tmate
     - name: Preparing stuff
       env:
         IS_SELFHOSTED_SERVER: ${{ github.event.inputs.isSelfhostedServer }}
@@ -76,31 +76,31 @@ jobs:
         # call utility function to setup config
         source ./main.sh && \
         preparingStuff
-#     - name: Start tmate session
-#       env:
-#         TMAK: ${{ secrets.TMAK }}
-#         TIME_TO_ALIVE: ${{ github.event.inputs.timeout }}
-#       # if: ${{ failure() }}
-# #       if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
-#       run: |
-#         echo "public IP => $(curl -s ifconfig.me)" && \
-#         # get installed version
-#         tmate -V && \
-#         # run
-#         source ./main.sh && \
-#         startMyBox
+    - name: Start tmate session
+      env:
+        TMAK: ${{ secrets.TMAK }}
+        TIME_TO_ALIVE: ${{ github.event.inputs.timeout }}
+      # if: ${{ failure() }}
+#       if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
+      run: |
+        echo "public IP => $(curl -s ifconfig.me)" && \
+        # get installed version
+        tmate -V && \
+        # run
+        source ./main.sh && \
+        startMyBox
       #uses: mxschmitt/action-tmate@v3
       #with:
       #  sudo: false
       #  limit-access-to-actor: true
       #timeout-minutes: 60
-    - name: open tunnel
-      env:
-        SSHORP: ${{ secrets.SSHORP }}
-        SSHUSR: ${{ secrets.SSHUSR }}
-        SSHSER: ${{ secrets.SSHSER }}
-        SSHPOT: ${{ secrets.SSHPOT }}
-        TIME_TO_ALIVE: ${{ github.event.inputs.timeout }}
-      run: |
-        source ./main.sh && \
-        openTunnel
+#     - name: open tunnel
+#       env:
+#         SSHORP: ${{ secrets.SSHORP }}
+#         SSHUSR: ${{ secrets.SSHUSR }}
+#         SSHSER: ${{ secrets.SSHSER }}
+#         SSHPOT: ${{ secrets.SSHPOT }}
+#         TIME_TO_ALIVE: ${{ github.event.inputs.timeout }}
+#       run: |
+#         source ./main.sh && \
+#         openTunnel
