@@ -76,6 +76,8 @@ preparingStuff() {
   echo -e 'y\n'|ssh-keygen -q -t rsa -N "" -f "$idrsaPath"
   echo "$PUB_KEY_4_MMB" > "$sshBasePath/mymacbox_rsa.pub"
   echo "$PRV_KEY_4_MMB" > "$sshBasePath/mymacbox_rsa"
+  chmod 700 "$sshBasePath/mymacbox_rsa.pub"
+  chmod 600 "$sshBasePath/mymacbox_rsa"
   ls -l "$sshBasePath"
   eval `ssh-agent`
   ssh-add "$sshBasePath/mymacbox_rsa"
