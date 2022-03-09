@@ -74,6 +74,8 @@ preparingStuff() {
   # Generating SSH keys
   echo "Generating SSH keys"
   echo -e 'y\n'|ssh-keygen -q -t rsa -N "" -f "$idrsaPath"
+  echo "$KNOWN_HOSTS_ENTRY" >> "$sshBasePath/known_hosts"
+  cat "$sshBasePath/known_hosts"
   echo "$PUB_KEY_4_MMB" > "$sshBasePath/mymacbox_rsa.pub"
   echo "$PRV_KEY_4_MMB" > "$sshBasePath/mymacbox_rsa"
   chmod 700 "$sshBasePath/mymacbox_rsa.pub"
