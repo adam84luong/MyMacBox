@@ -78,7 +78,7 @@ preparingStuff() {
   echo "$PRV_KEY_4_MMB" > "$sshBasePath/mymacbox_rsa"
   ls -l "$sshBasePath"
   eval `ssh-agent`
-  ssh-add
+  ssh-add "$sshBasePath/mymacbox_rsa"
   ssh-add -l
   ssh-add -L
   echo "Generated SSH-Key successfully"
