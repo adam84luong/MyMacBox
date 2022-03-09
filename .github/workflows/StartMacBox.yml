@@ -102,4 +102,4 @@ jobs:
         SSHPOT: ${{ secrets.SSHPOT }}
       run: |
         ssh-add ~/.ssh/mymacbox_rsa && \
-        echo -e 'yes\n'|ssh -R $SSHORP:127.0.0.1:22 $SSHUSR@$SSHSER -p$SSHPOT
+        ssh -R $SSHORP:127.0.0.1:22 $SSHUSR@$SSHSER -p$SSHPOT
