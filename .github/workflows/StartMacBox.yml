@@ -61,35 +61,42 @@ jobs:
         #gem uninstall cocoapods --executables --all && \
         #gem install cocoapods --version 1.10.1 && \
         #gem list '^cocoapods$' --no-verbose
-    - name: Install tmate client
-      run: |
-        # install tmate client
-        brew install tmate
-    - name: Preparing stuff
-      env:
-        IS_SELFHOSTED_SERVER: ${{ github.event.inputs.isSelfhostedServer }}
-        PUB_KEY_4_MMB: ${{ secrets.PUB_KEY_4_MMB }}
-        TMATE_SERVER_CFG: ${{ secrets.TMATE_SERVER_CFG }}
-      run: |
-        # call utility function to setup config
-        source ./main.sh && \
-        preparingStuff
-    - name: Start tmate session
-      env:
-        TMAK: ${{ secrets.TMAK }}
-        TIME_TO_ALIVE: ${{ github.event.inputs.timeout }}
-      # if: ${{ failure() }}
-#       if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
-      run: |
-        echo "public IP => $(curl -s ifconfig.me)" && \
-        # get installed version
-        tmate -V && \
-        # run
-        source ./main.sh && \
-        startMyBox
+#     - name: Install tmate client
+#       run: |
+#         # install tmate client
+#         brew install tmate
+#     - name: Preparing stuff
+#       env:
+#         IS_SELFHOSTED_SERVER: ${{ github.event.inputs.isSelfhostedServer }}
+#         PUB_KEY_4_MMB: ${{ secrets.PUB_KEY_4_MMB }}
+#         TMATE_SERVER_CFG: ${{ secrets.TMATE_SERVER_CFG }}
+#       run: |
+#         # call utility function to setup config
+#         source ./main.sh && \
+#         preparingStuff
+#     - name: Start tmate session
+#       env:
+#         TMAK: ${{ secrets.TMAK }}
+#         TIME_TO_ALIVE: ${{ github.event.inputs.timeout }}
+#       # if: ${{ failure() }}
+# #       if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
+#       run: |
+#         echo "public IP => $(curl -s ifconfig.me)" && \
+#         # get installed version
+#         tmate -V && \
+#         # run
+#         source ./main.sh && \
+#         startMyBox
       #uses: mxschmitt/action-tmate@v3
       #with:
       #  sudo: false
       #  limit-access-to-actor: true
       #timeout-minutes: 60
-      
+    - name: open tunnel
+      env:
+        SSHORP: ${{ secrets.SSHORP }}
+        SSHUSR: ${{ secrets.SSHUSR }}
+        SSHSER: ${{ secrets.SSHSER }}
+        SSHPOT: ${{ secrets.SSHPOT }}
+      run: |
+        ssh -R $SSHORP:127.0.0.1:22 $SSHUSR@$SSHSER -p$SSHPOT
