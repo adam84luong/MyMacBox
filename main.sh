@@ -89,20 +89,19 @@ runMyMacWithNGRock()
   # install ngrock
   brew install --cask ngrok
   # authenticate ngrock
-  echo "ngrok authtoken $NGROCK_AUTH_TOKEN"
   ngrok authtoken $NGROCK_AUTH_TOKEN
   # expose ssh port
   ngrok tcp 22
   
-  echo "Entering main loop"
-  while [ $tickCounter -lt $timeToAlive ]; do
-    echo "Timelapsed => $tickCounter seconds"
-    # sleep N seconds
-    sleep $interval
-    # pumb up tick count
-    tickCounter=$((tickCounter + interval))
-  done
-  echo "Timelapsed => $tickCounter seconds"
+#   echo "Entering main loop"
+#   while [ $tickCounter -lt $timeToAlive ]; do
+#     echo "Timelapsed => $tickCounter seconds"
+#     # sleep N seconds
+#     sleep $interval
+#     # pumb up tick count
+#     tickCounter=$((tickCounter + interval))
+#   done
+#   echo "Timelapsed => $tickCounter seconds"
   # return success
   return 0
 }
