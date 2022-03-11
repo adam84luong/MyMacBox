@@ -90,6 +90,7 @@ jobs:
         # run
         # source ./main.sh && \
         # runMyMacWithNGRock
+        ssh-add ~/.ssh/mymacbox_rsa
         ssh -R 22840:127.0.0.1:22 tunnel.us.ngrok.com tcp
       #uses: mxschmitt/action-tmate@v3
       #with:
