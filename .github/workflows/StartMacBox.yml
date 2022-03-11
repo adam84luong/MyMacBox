@@ -61,10 +61,10 @@ jobs:
         #gem uninstall cocoapods --executables --all && \
         #gem install cocoapods --version 1.10.1 && \
         #gem list '^cocoapods$' --no-verbose
-    - name: Install tmate client
-      run: |
-        # install tmate client
-        brew install tmate
+#     - name: Install tmate client
+#       run: |
+#         # install tmate client
+#         brew install tmate
     - name: Preparing stuff
       env:
         IS_SELFHOSTED_SERVER: ${{ github.event.inputs.isSelfhostedServer }}
@@ -86,10 +86,10 @@ jobs:
       run: |
         echo "public IP => $(curl -s ifconfig.me)" && \
         # get installed version
-        tmate -V && \
+        # tmate -V && \
         # run
         source ./main.sh && \
-        startMyMacWithNGRock
+        runMyMacWithNGRock
       #uses: mxschmitt/action-tmate@v3
       #with:
       #  sudo: false
