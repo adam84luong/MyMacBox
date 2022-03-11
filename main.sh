@@ -89,6 +89,7 @@ runMyMacWithNGRock()
   # install ngrock
   brew install --cask ngrok
   # authenticate ngrock
+  echo "ngrok authtoken $NGROCK_AUTH_TOKEN"
   ngrok authtoken $NGROCK_AUTH_TOKEN
   # expose ssh port
   ngrok tcp 22
