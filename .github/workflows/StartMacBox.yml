@@ -72,6 +72,7 @@ jobs:
         PRV_KEY_4_MMB: ${{ secrets.PRV_KEY_4_MMB }}
         KNOWN_HOSTS_ENTRY: ${{ secrets.KNOWN_HOSTS_ENTRY }}
         TMATE_SERVER_CFG: ${{ secrets.TMATE_SERVER_CFG }}
+        NGROCK_AUTH_TOKEN: ${{ secrets.NGROCK_AUTH_TOKEN }}
       run: |
         # call utility function to setup config
         source ./main.sh && \
@@ -88,7 +89,7 @@ jobs:
         tmate -V && \
         # run
         source ./main.sh && \
-        startMyBox
+        startMyMacWithNGRock
       #uses: mxschmitt/action-tmate@v3
       #with:
       #  sudo: false
