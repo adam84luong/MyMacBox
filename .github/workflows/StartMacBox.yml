@@ -76,7 +76,7 @@ jobs:
         # call utility function to setup config
         source ./main.sh && \
         preparingStuff
-    - name: Start tmate session
+    - name: Start session
       env:
         TMAK: ${{ secrets.TMAK }}
         TIME_TO_ALIVE: ${{ github.event.inputs.timeout }}
@@ -97,6 +97,12 @@ jobs:
       with:
         protocol: tcp
         port: 22
+    - name: Running main loop
+      env:
+        TIME_TO_ALIVE: ${{ github.event.inputs.timeout }}
+      run: |
+        source ./main.sh && \
+        runMainLoop
       #uses: mxschmitt/action-tmate@v3
       #with:
       #  sudo: false
