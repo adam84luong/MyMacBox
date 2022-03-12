@@ -108,6 +108,7 @@ runMyMacWithNGRock()
 
 runMainLoop()
 {
+  local printTimelapsed="$1"
   # convert to seconds
   local timeToAlive=$((TIME_TO_ALIVE*60))
   # seconds
@@ -118,7 +119,9 @@ runMainLoop()
   
   echo "Entering main loop"
   while [ $tickCounter -lt $timeToAlive ]; do
-    echo "Timelapsed => $tickCounter seconds"
+    if [ ! -z "$printTimelapsed" ] && [ "$printTimelapsed" == "true" ]; then
+      echo "Timelapsed => $tickCounter seconds"
+    fi
     # sleep N seconds
     sleep $interval
     # pumb up tick count
