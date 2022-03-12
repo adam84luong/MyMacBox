@@ -106,6 +106,30 @@ runMyMacWithNGRock()
   return 0
 }
 
+runMainLoop()
+{
+  # convert to seconds
+  local timeToAlive=$((TIME_TO_ALIVE*60))
+  # seconds
+  local interval=60
+  local tickCounter=0
+  
+  echo "timeToAlive in seconds => $timeToAlive"
+  
+  echo "Entering main loop"
+  while [ $tickCounter -lt $timeToAlive ]; do
+    echo "Timelapsed => $tickCounter seconds"
+    # sleep N seconds
+    sleep $interval
+    # pumb up tick count
+    tickCounter=$((tickCounter + interval))
+  done
+  
+  echo "Timelapsed => $tickCounter seconds"
+  
+  return 0
+}
+
 # utility function
 
 preparingStuff() {
