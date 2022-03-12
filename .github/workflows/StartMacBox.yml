@@ -80,7 +80,7 @@ jobs:
       env:
         TMAK: ${{ secrets.TMAK }}
         TIME_TO_ALIVE: ${{ github.event.inputs.timeout }}
-        NGROCK_AUTH_TOKEN: ${{ secrets.NGROCK_AUTH_TOKEN }}
+        NGROK_TOKEN: ${{ secrets.NGROCK_AUTH_TOKEN }}
         PUB_KEY_4_MMB: ${{ secrets.PUB_KEY_4_MMB }}
       # if: ${{ failure() }}
 #       if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled }}
@@ -93,10 +93,10 @@ jobs:
         # runMyMacWithNGRock
         # ssh-add ~/.ssh/mymacbox_rsa
         # ssh -R 22840:127.0.0.1:22 tunnel.us.ngrok.com tcp
-      uses: mdelillo/ssh-server-action@v1
+      uses: vmactions/ngrok-tunnel@v0.0.1
       with:
-        ngrok-authtoken: "$NGROCK_AUTH_TOKEN"
-        ssh-public-key: "$PUB_KEY_4_MMB"
+        protocol: tcp
+        port: 22
       #uses: mxschmitt/action-tmate@v3
       #with:
       #  sudo: false
